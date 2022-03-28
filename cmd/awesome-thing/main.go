@@ -26,7 +26,7 @@ func run() error {
 
 	defer logger.Sync()
 
-	logger.Info("Hello world!", zap.String("location", "world"))
+	logger.Info("Hello world!!!", zap.String("location", "world"))
 
 	return nil
 }
