@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/31ffc50c";
-    flake-utils.url = "github:numtide/flake-utils/7e5bf3925";
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = { self, nixpkgs, flake-utils }:
@@ -19,11 +19,8 @@
         pname = "awesome-thing";
         version = "0.0.1";
 
-        modSha256 = lib.fakeSha256;
-        vendorSha256 = null;
-
+        vendorSha256 = "sha256-QOeE2K/DydA+xbK3eebeCIzr2LcwNmXlDLs+oNzqmcM=";
         subPackages = [ "cmd/awesome-thing" ];
-
         src = ./.;
 
         meta = {
