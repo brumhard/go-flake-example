@@ -2,6 +2,8 @@
 # Project #
 ###########
 
+.direnv/
+
 # make output
 bin/
 out/
