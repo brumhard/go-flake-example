@@ -27,7 +27,7 @@
           platforms = pkgs.lib.platforms.linux ++ pkgs.lib.platforms.darwin;
         };
       };
-      ociImage = pkgs.dockerTools.buildImage {
+      ociImage = pkgs.dockerTools.buildLayeredImage {
         name = "awesome-image";
         tag = version;
         contents = [self.packages.${system}.awesome-thing];
