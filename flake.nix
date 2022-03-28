@@ -8,21 +8,34 @@
   flake-utils.lib.eachDefaultSystem (system:
   let
     pkgs = nixpkgs.legacyPackages.${system};
+    version = "0.0.1";
   in
   rec {
-    packages.awesome-thing = pkgs.buildGoModule {
-      pname = "awesome-thing";
-      version = "0.0.1";
+    packages = {
+      awesome-thing = pkgs.buildGoModule {
+        pname = "awesome-thing";
+        version = version;
 
-      vendorSha256 = "sha256-QOeE2K/DydA+xbK3eebeCIzr2LcwNmXlDLs+oNzqmcM=";
-      subPackages = [ "cmd/awesome-thing" ];
-      src = ./.;
+        vendorSha256 = "sha256-QOeE2K/DydA+xbK3eebeCIzr2LcwNmXlDLs+oNzqmcM=";
+        subPackages = [ "cmd/awesome-thing" ];
+        src = ./.;
 
-      meta = {
-        description = "Awesome Project";
-        license = pkgs.lib.licenses.mit;
-        maintainers = [ "brumhard" ];
-        platforms = pkgs.lib.platforms.linux ++ pkgs.lib.platforms.darwin;
+        meta = {
+          description = "Awesome Project";
+          license = pkgs.lib.licenses.mit;
+          maintainers = [ "brumhard" ];
+          platforms = pkgs.lib.platforms.linux ++ pkgs.lib.platforms.darwin;
+        };
+      };
+      ociImage = pkgs.dockerTools.buildImage {
+        name = "awesome-image";
+        tag = version;
+        contents = [self.packages.${system}.awesome-thing];
+        config = {
+          Cmd = [
+            "${self.packages.${system}.awesome-thing}/bin/awesome-thing"
+          ];
+        };
       };
     };
 
